@@ -13,7 +13,7 @@ router
     .get(async (req, res) =>{
         try {
             const emps = await empModel.find()
-            res.status(200).json({status: true, Employees: emps})
+            res.status(200).json({status: true, employees: emps})
         } catch (err) {
             res.status(500).send({status: false, message: err.message})
         }
@@ -81,8 +81,8 @@ router
     // update employee details by ID
     .put([
             param('eid').isString(),
-            body('first_name', 'First name cannot be empty').trim().optional(),
-            body('last_name', 'Last name cannot be empty').trim().optional(),
+            body('first_name').trim().optional(),
+            body('last_name').trim().optional(),
             body('email', 'Invalid email format').trim().optional().isEmail(),
             body('salary', 'Salary must be integer value, minimum 0').optional().isInt({min:0}),
             body('date_of_joining', 'Must be date format').optional().isISO8601().toDate(),
